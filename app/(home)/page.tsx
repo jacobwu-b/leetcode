@@ -12,7 +12,7 @@ export default function HomePage() {
         >
           /docs
         </Link>{' '}
-        and see the documentation.
+        and see the practice problems.
       </p>
     </main>
   );
