@@ -1,0 +1,78 @@
+---
+title: "Balanced Binary Tree"
+difficulty: "Easy"
+category: "Tree,
+           Depth-First Search,
+           Binary Tree"
+date: "2025-02-24"
+---
+
+# Problem Statement
+Given a binary tree, determine if it is height-balanced. A height-balanced binary tree is a binary tree in which the depth of the two subtrees of every node never differs by more than one.
+
+
+Example 1:
+```plaintext
+Input: root = [3,9,20,null,null,15,7]
+Output: true
+```
+
+Example 2:
+```plaintext
+Input: root = [1,2,2,3,3,null,null,4,4]
+Output: false
+```
+
+Example 3:
+```plaintext
+Input: root = []
+Output: true
+```
+
+# My Solution
+```python
+def isBalanced(self, root: Optional[TreeNode]) -> bool:
+    def helper(root):
+        if not root:
+            return 1
+        left = helper(root.left)
+        right = helper(root.right)
+        if not left or not right or abs(left - right) > 1:
+            return False
+        return max(left, right) + 1
+    ret_val = helper(root)
+    return isinstance(ret_val, int) and ret_val > 0
+```
+
+Explanation
+* Compare left subtree height and right subtree height. If height differs more than 1 or if a subtree is not balanced, return False.
+
+# Best Solution
+```python
+def isBalanced(self, root: TreeNode) -> bool:
+    def check_height(node):
+        if not node:
+            return 0
+
+        left_height = check_height(node.left)
+        if left_height == -1:
+            return -1  # Left subtree is not balanced
+
+        right_height = check_height(node.right)
+        if right_height == -1:
+            return -1  # Right subtree is not balanced
+
+        if abs(left_height - right_height) > 1:
+            return -1  # Current node is not balanced
+
+        return max(left_height, right_height) + 1
+
+    return check_height(root) != -1
+```
+
+Why is this better?
+* Same logic as mine, but formatted more concisely.
+
+Complexity Analysis
+* Time Complexity: O(n)
+* Space Complexity: O(n)
