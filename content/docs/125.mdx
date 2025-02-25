@@ -1,0 +1,70 @@
+---
+title: "Valid Palindrome"
+difficulty: "Easy"
+category: "Two Pointers
+           String"
+date: "2025-02-25"
+---
+
+# Problem Statement
+A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+
+Given a string s, return true if it is a palindrome, or false otherwise.
+
+Example 1:
+```plaintext
+Input: s = "A man, a plan, a canal: Panama"
+Output: true
+Explanation: "amanaplanacanalpanama" is a palindrome.
+```
+
+Example 2:
+```plaintext
+Input: s = "race a car"
+Output: false
+Explanation: "raceacar" is not a palindrome.
+```
+
+Example 3:
+```plaintext
+Input: s = " "
+Output: true
+Explanation: s is an empty string "" after removing non-alphanumeric characters.
+Since an empty string reads the same forward and backward, it is a palindrome.
+```
+
+# My Solution
+```python
+def isPalindrome(self, s: str) -> bool:
+    string = [c for c in s if c.isalnum()]
+    for i in range(math.floor(len(string) / 2)):
+        if string[i].casefold() != string[-i - 1].casefold():
+            return False
+    return True
+```
+
+Explanation
+* Strip all non-alphanumeric characters
+* Iterate through half of string, for each index visit i and -i
+
+# Best Solution
+```python
+def isPalindrome(self, s: str) -> bool:
+    s = re.sub(r'[^a-zA-Z0-9]', '', s).lower()  # Remove non-alphanumeric and convert to lowercase
+    left, right = 0, len(s) - 1
+
+    while left < right:
+        if s[left] != s[right]:
+            return False
+        left += 1
+        right -= 1
+
+    return True
+```
+
+Why is this better?
+* Same logic, different syntax
+
+Complexity Analysis
+* Time Complexity: O(n)
+* Space Complexity: O(n)

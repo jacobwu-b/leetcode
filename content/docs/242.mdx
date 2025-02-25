@@ -1,0 +1,54 @@
+---
+title: "Valid Anagram"
+difficulty: "Easy"
+category: "Hash Table
+           String
+           Sorting"
+date: "2025-02-25"
+---
+
+# Problem Statement
+Given two strings s and t, return true if t is an anagram of s, and false otherwise. An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.
+
+Example 1:
+```plaintext
+Input: s = "anagram", t = "nagaram"
+Output: true
+```
+
+Example 2:
+```plaintext
+Input: s = "rat", t = "car"
+Output: false
+```
+
+# My Solution
+```python
+from collections import defaultdict
+def isAnagram(self, s: str, t: str) -> bool:
+    mapping = defaultdict(int)
+    for c in s:
+        mapping[c] += 1
+    for c in t:
+        mapping[c] -= 1
+    for key in mapping:
+        if mapping[key] != 0:
+            return False
+    return True
+```
+
+Explanation
+* Use mapping to keep track of frequency of each character in s, then correspondingly remove each occurrence in t. Assert all values are 0 at the end for a valid anagram.
+
+# Best Solution
+```python
+def is_anagram(s: str, t: str) -> bool:
+    return Counter(s) == Counter(t)
+```
+
+Why is this better?
+* Same logic, cleaner code
+
+Complexity Analysis
+* Time Complexity: O(n)
+* Space Complexity: O(n)

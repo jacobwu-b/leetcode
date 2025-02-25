@@ -1,0 +1,63 @@
+---
+title: "Invert Binary Tree"
+difficulty: "Easy"
+category: "Tree
+           Depth-First Search
+           Breadth-First Search
+           Binary Tree"
+date: "2025-02-25"
+---
+
+# Problem Statement
+Given the root of a binary tree, invert the tree, and return its root.
+
+Example 1:
+```plaintext
+Input: root = [4,2,7,1,3,6,9]
+Output: [4,7,2,9,6,3,1]
+```
+
+Example 2:
+```plaintext
+Input: root = [2,1,3]
+Output: [2,3,1]
+```
+
+Example 3:
+```plaintext
+Input: root = []
+Output: []
+```
+
+# My Solution
+```python
+def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    if not root:
+        return
+    new_left = self.invertTree(root.right)
+    root.right = self.invertTree(root.left)
+    root.left = new_left
+    return root
+```
+
+Explanation
+* Recursion
+
+# Best Solution
+```python
+def invert_tree(root: Optional[TreeNode]) -> Optional[TreeNode]:
+    if not root:
+        return None
+
+    # Swap the left and right children
+    root.left, root.right = invert_tree(root.right), invert_tree(root.left)
+
+    return root
+```
+
+Why is this better?
+* Same logic, cleaner code
+
+Complexity Analysis
+* Time Complexity: O(n)
+* Space Complexity: O(h) where h is the height of the tree, O(log n) for balanced trees, O(n) for skewed trees
