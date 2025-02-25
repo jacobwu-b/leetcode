@@ -1,0 +1,87 @@
+---
+title: "Valid Parentheses"
+difficulty: "Easy"
+category: "String,
+           Stack"
+date: "2025-02-25"
+---
+
+# Problem Statement
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+1. Open brackets must be closed by the same type of brackets.
+2. Open brackets must be closed in the correct order.
+3. Every close bracket has a corresponding open bracket of the same type.
+
+Example 1:
+```plaintext
+Input: s = "()"
+Output: true
+```
+
+Example 2:
+```plaintext
+Input: s = "()[]{}"
+Output: true
+```
+
+Example 3:
+```plaintext
+Input: s = "(]"
+Output: false
+```
+
+Example 4:
+```plaintext
+Input: s = "([])"
+Output: true
+```
+
+# My Solution
+```python
+def isValid(self, s):
+    stack = []
+    for c in s:
+        if c in ["(", "[", "{"]:
+            stack.append(c)
+        else:
+            if not stack:
+                return False
+            open_bracket = stack.pop()
+            if open_bracket == "(" and c != ")":
+                return False
+            if open_bracket == "[" and c != "]":
+                return False
+            if open_bracket == "{" and c != "}":
+                return False
+    return not stack
+```
+
+Explanation
+* Use stack to store the latest open bracket
+
+# Best Solution
+```python
+def isValid(self, s):
+    stack = []
+    mapping = {')': '(', '}': '{', ']': '['}
+
+    for char in s:
+        if char in mapping:
+            top_element = stack.pop() if stack else '#'  # Pop from stack or use a dummy character
+            if mapping[char] != top_element:
+                return False
+        else:
+            stack.append(char)
+
+    return not stack
+```
+
+Why is this better?
+* Same logic, cleaner code through mapping variable and dummy character
+
+Complexity Analysis
+* Time Complexity: O(n)
+* Space Complexity: O(n)
