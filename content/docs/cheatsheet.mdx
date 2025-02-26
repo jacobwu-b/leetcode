@@ -1,0 +1,233 @@
+---
+title: "Cheat Sheet"
+difficulty: ""
+category: ""
+date: "2025-02-25"
+---
+
+# Algorithms
+Recursive DFS
+```python
+def dfs(node, visited):
+    if node in visited:
+        return
+    visited.add(node)
+
+    for neighbor in graph[node]:  # Traverse neighbors
+        dfs(neighbor, visited)
+```
+
+Iterative DFS
+```python
+def dfs_iterative(start):
+    stack, visited = [start], set()
+
+    while stack:
+        node = stack.pop()
+        if node not in visited:
+            visited.add(node)
+            for neighbor in graph[node]:  # Push neighbors
+                stack.append(neighbor)
+```
+
+Iterative BFS
+```python
+from collections import deque
+
+def bfs(start):
+    queue, visited = deque([start]), set()
+
+    while queue:
+        node = queue.popleft()
+        if node not in visited:
+            visited.add(node)
+            for neighbor in graph[node]:  # Push neighbors
+                queue.append(neighbor)
+```
+
+Dijkstra’s Algorithm (Shortest Path in Weighted Graph)
+```python
+import heapq
+
+def dijkstra(graph, start):
+    heap = [(0, start)]  # (distance, node)
+    shortest_paths = {start: 0}
+
+    while heap:
+        cur_dist, node = heapq.heappop(heap)
+
+        if cur_dist > shortest_paths.get(node, float('inf')):
+            continue
+
+        for neighbor, weight in graph[node]:  # Graph stored as adjacency list
+            distance = cur_dist + weight
+            if distance < shortest_paths.get(neighbor, float('inf')):
+                shortest_paths[neighbor] = distance
+                heapq.heappush(heap, (distance, neighbor))
+
+    return shortest_paths
+```
+Complexity: O((V + E) log V) using a priority queue
+
+Trie
+```python
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_end = True
+
+    def search(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return node.is_end
+
+    def starts_with(self, prefix):
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return True
+```
+* Insert: O(n)
+* Search: O(n)
+* Prefix Check: O(n)
+
+Union-Find (Disjoint Set for Connected Components)
+```python
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [1] * n
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])  # Path compression
+        return self.parent[x]
+
+    def union(self, x, y):
+        rootX = self.find(x)
+        rootY = self.find(y)
+
+        if rootX != rootY:
+            if self.rank[rootX] > self.rank[rootY]:
+                self.parent[rootY] = rootX
+            elif self.rank[rootX] < self.rank[rootY]:
+                self.parent[rootX] = rootY
+            else:
+                self.parent[rootY] = rootX
+                self.rank[rootX] += 1
+```
+
+Topological Sort
+```python
+from collections import deque
+
+def topological_sort(vertices, edges):
+    indegree = {i: 0 for i in range(vertices)}
+    graph = {i: [] for i in range(vertices)}
+
+    for u, v in edges:
+        graph[u].append(v)
+        indegree[v] += 1
+
+    queue = deque([node for node in indegree if indegree[node] == 0])
+    order = []
+
+    while queue:
+        node = queue.popleft()
+        order.append(node)
+
+        for neighbor in graph[node]:
+            indegree[neighbor] -= 1
+            if indegree[neighbor] == 0:
+                queue.append(neighbor)
+
+    return order if len(order) == vertices else []  # Return empty if cycle exists
+```
+Complexity: O(V + E)
+
+Sliding Window (Optimized for Subarray Problems)
+```python
+def max_subarray_sum(nums, k):
+    window_sum, max_sum = 0, float('-inf')
+    left = 0
+
+    for right in range(len(nums)):
+        window_sum += nums[right]
+
+        if right - left + 1 == k:
+            max_sum = max(max_sum, window_sum)
+            window_sum -= nums[left]  # Slide window
+            left += 1
+
+    return max_sum
+```
+Complexity: O(n)
+
+# Data Structures
+Defaultdict for Auto-Initializing Dictionary Keys
+```python
+from collections import defaultdict
+
+graph = defaultdict(list)  # Creates a dictionary with default value `list`
+graph[1].append(2)
+print(graph)  # {1: [2]}
+```
+
+Counter for Frequency Count
+```python
+from collections import Counter
+
+arr = [1, 2, 2, 3, 3, 3]
+count = Counter(arr)
+print(count)  # Counter({3: 3, 2: 2, 1: 1})
+```
+
+heapq for Min/Max Heap
+```python
+import heapq
+
+nums = [3, 1, 4, 1, 5, 9]
+heapq.heapify(nums)  # Convert list to a min-heap
+heapq.heappop(nums)  # Pops the smallest element
+heapq.heappush(nums, 2)  # Push new element
+heapq.nlargest(k, arr) # Get k kargest elements
+heapq.nsmallest(k, arr) # Get k smallest elements
+```
+
+bisect for Binary Search & Sorted Insert
+```python
+import bisect
+
+arr = [1, 3, 4, 7]
+idx = bisect.bisect_left(arr, 5)  # Finds position to insert 5
+bisect.insort(arr, 5)  # Inserts 5 into the sorted array
+print(arr)  # [1, 3, 4, 5, 7]
+```
+
+deque for Efficient Queue Operations
+```python
+from collections import deque
+
+dq = deque([1, 2, 3])
+dq.append(4)  # Append right
+dq.appendleft(0)  # Append left
+dq.pop()  # Remove from right
+dq.popleft()  # Remove from left
+```
