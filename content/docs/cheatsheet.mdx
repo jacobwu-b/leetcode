@@ -6,7 +6,7 @@ date: "2025-02-25"
 ---
 
 # Algorithms
-Recursive DFS
+## Recursive DFS
 ```python
 def dfs(node, visited):
     if node in visited:
@@ -17,7 +17,7 @@ def dfs(node, visited):
         dfs(neighbor, visited)
 ```
 
-Iterative DFS
+## Iterative DFS
 ```python
 def dfs_iterative(start):
     stack, visited = [start], set()
@@ -30,7 +30,7 @@ def dfs_iterative(start):
                 stack.append(neighbor)
 ```
 
-Iterative BFS
+## Iterative BFS
 ```python
 from collections import deque
 
@@ -45,7 +45,7 @@ def bfs(start):
                 queue.append(neighbor)
 ```
 
-Dijkstra’s Algorithm (Shortest Path in Weighted Graph)
+## Dijkstra’s Algorithm (Shortest Path in Weighted Graph)
 ```python
 import heapq
 
@@ -69,7 +69,7 @@ def dijkstra(graph, start):
 ```
 Complexity: O((V + E) log V) using a priority queue
 
-Trie
+## Trie
 ```python
 class TrieNode:
     def __init__(self):
@@ -108,7 +108,7 @@ class Trie:
 * Search: O(n)
 * Prefix Check: O(n)
 
-Union-Find (Disjoint Set for Connected Components)
+## Union-Find (Disjoint Set for Connected Components)
 ```python
 class UnionFind:
     def __init__(self, n):
@@ -134,7 +134,7 @@ class UnionFind:
                 self.rank[rootX] += 1
 ```
 
-Topological Sort
+## Topological Sort
 ```python
 from collections import deque
 
@@ -162,7 +162,7 @@ def topological_sort(vertices, edges):
 ```
 Complexity: O(V + E)
 
-Sliding Window (Optimized for Subarray Problems)
+## Sliding Window (Optimized for Subarray Problems)
 ```python
 def max_subarray_sum(nums, k):
     window_sum, max_sum = 0, float('-inf')
@@ -181,7 +181,7 @@ def max_subarray_sum(nums, k):
 Complexity: O(n)
 
 # Data Structures
-Defaultdict for Auto-Initializing Dictionary Keys
+## defaultdict for Auto-Initializing Dictionary Keys
 ```python
 from collections import defaultdict
 
@@ -190,7 +190,7 @@ graph[1].append(2)
 print(graph)  # {1: [2]}
 ```
 
-Counter for Frequency Count
+## Counter for Frequency Count
 ```python
 from collections import Counter
 
@@ -199,7 +199,7 @@ count = Counter(arr)
 print(count)  # Counter({3: 3, 2: 2, 1: 1})
 ```
 
-heapq for Min/Max Heap
+## heapq for Min/Max Heap
 ```python
 import heapq
 
@@ -211,7 +211,7 @@ heapq.nlargest(k, arr) # Get k kargest elements
 heapq.nsmallest(k, arr) # Get k smallest elements
 ```
 
-bisect for Binary Search & Sorted Insert
+## bisect for Binary Search & Sorted Insert
 ```python
 import bisect
 
@@ -221,7 +221,7 @@ bisect.insort(arr, 5)  # Inserts 5 into the sorted array
 print(arr)  # [1, 3, 4, 5, 7]
 ```
 
-deque for Efficient Queue Operations
+## deque for Efficient Queue Operations
 ```python
 from collections import deque
 
