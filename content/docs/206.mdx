@@ -1,0 +1,63 @@
+---
+title: "Reverse Linked List"
+difficulty: "Easy"
+category: "Linked List
+           Recursion"
+date: "2025-02-26"
+---
+
+# Problem Statement
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+Example 1:
+```plaintext
+Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+```
+
+Example 2:
+```plaintext
+Input: head = [1,2]
+Output: [2,1]
+```
+
+Example 3:
+```plaintext
+Input: head = []
+Output: []
+```
+
+# My Solution
+```python
+def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    if not head or not head.next:
+        return head
+    ret_val = self.reverseList(head.next)
+    head.next.next, head.next = head, None
+    return ret_val
+```
+
+Explanation
+* None
+
+# Best Solution
+```python
+def reverseList(head: ListNode) -> ListNode:
+    prev = None
+    curr = head
+
+    while curr:
+        next_node = curr.next  # Store next node
+        curr.next = prev       # Reverse link
+        prev = curr            # Move prev forward
+        curr = next_node       # Move curr forward
+
+    return prev  # New head
+```
+
+Why is this better?
+* Save space
+
+Complexity Analysis
+* Time Complexity: O(n)
+* Space Complexity: O(1) for iterative (Best solution), O(n) for recursive (My solution)

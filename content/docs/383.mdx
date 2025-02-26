@@ -1,0 +1,70 @@
+---
+title: "Ransom Note"
+difficulty: "Easy"
+category: "Hash Table
+           String
+           Counting"
+date: "2025-02-26"
+---
+
+# Problem Statement
+Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
+
+Each letter in magazine can only be used once in ransomNote.
+
+Example 1:
+```plaintext
+Input: ransomNote = "a", magazine = "b"
+Output: false
+```
+
+Example 2:
+```plaintext
+Input: ransomNote = "aa", magazine = "ab"
+Output: false
+```
+
+Example 3:
+```plaintext
+Input: ransomNote = "aa", magazine = "aab"
+Output: true
+```
+
+# My Solution
+```python
+from collections import Counter
+
+def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+    ransomCounter = Counter(ransomNote)
+    magazineCounter = Counter(magazine)
+    for key, value in ransomCounter.items():
+        if magazineCounter[key] < value:
+            return False
+    return True
+```
+
+Explanation
+* See above
+
+# Best Solution
+```python
+from collections import Counter
+
+def canConstruct(ransomNote: str, magazine: str) -> bool:
+    magazine_count = Counter(magazine)
+
+    for char in ransomNote:
+        if magazine_count[char] == 0:
+            return False  # Not enough of this letter
+        magazine_count[char] -= 1  # Use the letter
+
+    return True
+```
+
+Why is this better?
+* Lower memory usage (one counter instead of two)
+* Avoids extra iteration (once over ransomNote instead of two)
+
+Complexity Analysis
+* Time Complexity: O(m + n) where m is len(ransomNote) and n is len(magazine)
+* Space Complexity: O(1)

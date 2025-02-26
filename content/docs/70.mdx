@@ -1,0 +1,64 @@
+---
+title: "Climbing Stairs"
+difficulty: "Easy"
+category: "Math
+           Dynamic Programming
+           Memoization"
+date: "2025-02-26"
+---
+
+# Problem Statement
+You are climbing a staircase. It takes n steps to reach the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+Example 1:
+```plaintext
+Input: n = 2
+Output: 2
+Explanation: There are two ways to climb to the top.
+1. 1 step + 1 step
+2. 2 steps
+```
+
+Example 2:
+```plaintext
+Input: n = 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 step
+```
+
+# My Solution
+```python
+def climbStairs(self, n: int) -> int:
+    i, j = 1, 2
+    for _ in range(n - 1):
+        i, j = j, i + j
+    return i
+```
+
+Explanation
+* Memoization
+* climbStairs(n) = climbStairs(n-1) + climbStairs(n-2)
+
+# Best Solution
+```python
+def climbStairs(n):
+    if n == 1:
+        return 1
+    prev2, prev1 = 1, 2
+    for _ in range(3, n + 1):
+        curr = prev1 + prev2
+        prev2, prev1 = prev1, curr
+    return prev1
+```
+
+Why is this better?
+* It's not
+
+Complexity Analysis
+* Time Complexity: O(n)
+* Space Complexity: O(1)
