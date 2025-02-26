@@ -1,0 +1,85 @@
+---
+title: "Linked List Cycle"
+difficulty: "Easy"
+category: "Hash Table
+           Linked List
+           Two Pointers"
+date: "2025-02-25"
+---
+
+# Problem Statement
+Given head, the head of a linked list, determine if the linked list has a cycle in it.
+
+There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
+
+Return true if there is a cycle in the linked list. Otherwise, return false.
+
+Example 1:
+```plaintext
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+```
+
+Example 2:
+```plaintext
+Input: head = [1,2], pos = 0
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
+```
+
+Example 3:
+```plaintext
+Input: head = [1], pos = -1
+Output: false
+Explanation: There is no cycle in the linked list.
+```
+
+# My Solution
+```python
+def hasCycle(self, head: Optional[ListNode]) -> bool:
+    if not head:
+        return False
+    i = head
+    j = head.next
+    while j:
+        i = i.next
+        j = j.next
+        if not j:
+            return False
+        if i == j:
+            return True
+        j = j.next
+        if i == j:
+            return True
+    return False
+```
+
+Explanation
+* We can detect a cycle in a linked list using Floyd’s Cycle Detection Algorithm (also known as the Tortoise and Hare Algorithm). It uses two pointers:
+    * Slow Pointer (slow) moves one step at a time.
+  	* Fast Pointer (fast) moves two steps at a time.
+  	* If there’s a cycle, the two pointers will eventually meet.
+  	* If there’s no cycle, fast will reach the end (None).
+
+# Best Solution
+```python
+def hasCycle(head: Optional[ListNode]) -> bool:
+    slow, fast = head, head
+
+    while fast and fast.next:
+        slow = slow.next          # Move one step
+        fast = fast.next.next     # Move two steps
+
+        if slow == fast:          # Cycle detected
+            return True
+
+    return False  # No cycle
+```
+
+Why is this better?
+* Same logic as mine, but formatted more concisely.
+
+Complexity Analysis
+* Time Complexity: O(n)
+* Space Complexity: O(1)
