@@ -1,0 +1,62 @@
+---
+title: "Majority Element"
+difficulty: "Easy"
+category: "Array
+           Hash Table
+           Divide and Conquer
+           Sorting
+           Counting"
+date: "2025-02-26"
+---
+
+# Problem Statement
+Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+Example 1:
+```plaintext
+Input: nums = [3,2,3]
+Output: 3
+```
+
+Example 2:
+```plaintext
+Input: nums = [2,2,1,1,1,2,2]
+Output: 2
+```
+
+# My Solution
+```python
+from collections import Counter
+def majorityElement(self, nums: List[int]) -> int:
+    return Counter(nums).most_common(1)[0][0]
+```
+
+Explanation
+* Boyer-Moore Voting Algorithm (Best Approach)
+* This algorithm maintains a count while iterating through the array.
+* If count == 0, we pick a new candidate.
+* If the current number matches the candidate, increase count, otherwise decrease it.
+* The remaining candidate at the end is the majority element.
+
+# Best Solution
+```python
+def majorityElement(nums):
+    count = 0
+    candidate = None
+
+    for num in nums:
+        if count == 0:
+            candidate = num
+        count += (1 if num == candidate else -1)
+
+    return candidate
+```
+
+Why is this better?
+* Save space
+
+Complexity Analysis
+* Time Complexity: O(n)
+* Space Complexity: O(1) for Boyer-Moore Voting Algorithm (Best solution), O(n) for HashMap / Counter (My solution)

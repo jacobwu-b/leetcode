@@ -1,0 +1,76 @@
+---
+title: "Add Binary"
+difficulty: "Easy"
+category: "Math
+           String
+           Bit Manipulation
+           Simulation"
+date: "2025-02-26"
+---
+
+# Problem Statement
+Given two binary strings a and b, return their sum as a binary string.
+
+Example 1:
+```plaintext
+Input: a = "11", b = "1"
+Output: "100"
+```
+
+Example 2:
+```plaintext
+Input: a = "1010", b = "1011"
+Output: "10101"
+```
+
+# My Solution
+```python
+def addBinary(self, a: str, b: str) -> str:
+    if len(a) > len(b):
+        a, b = b, a
+    output = ""
+    carry = 0
+    for i in range(len(a)):
+        value = int(a[-i - 1]) + int(b[-i - 1]) + carry
+        output = str(value % 2) + output
+        carry = value // 2
+    for i in range(len(a), len(b)):
+        value = int(b[-i - 1]) + carry
+        output = str(value % 2) + output
+        carry = value // 2
+    if carry:
+        output = "1" + output
+    return output
+```
+
+Explanation
+* None
+
+# Best Solution
+```python
+def addBinary(a: str, b: str) -> str:
+    result = []
+    i, j = len(a) - 1, len(b) - 1
+    carry = 0
+
+    while i >= 0 or j >= 0 or carry:
+        sum_val = carry
+        if i >= 0:
+            sum_val += int(a[i])
+            i -= 1
+        if j >= 0:
+            sum_val += int(b[j])
+            j -= 1
+
+        result.append(str(sum_val % 2))  # Append sum mod 2 (binary sum)
+        carry = sum_val // 2  # Update carry
+
+    return ''.join(result[::-1])  # Reverse result to get the correct order
+```
+
+Why is this better?
+* Same logic, different syntax
+
+Complexity Analysis
+* Time Complexity: O(max(m, n))
+* Space Complexity: O(max(m, n))

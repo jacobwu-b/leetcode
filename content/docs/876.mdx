@@ -1,0 +1,67 @@
+---
+title: "Middle of the Linked List"
+difficulty: "Easy"
+category: "Tree
+           Depth-First Search
+           Binary Tree"
+date: "2025-02-26"
+---
+
+# Problem Statement
+Given the head of a singly linked list, return the middle node of the linked list.
+
+If there are two middle nodes, return the second middle node.
+
+Example 1:
+```plaintext
+Input: head = [1,2,3,4,5]
+Output: [3,4,5]
+Explanation: The middle node of the list is node 3.
+```
+
+Example 2:
+```plaintext
+Input: head = [1,2,3,4,5,6]
+Output: [4,5,6]
+Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one.
+```
+
+# My Solution
+```python
+def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    curr = head
+    count = 0
+    while curr:
+        curr = curr.next
+        count += 1
+    ret_val = head
+    for _ in range(count // 2):
+        ret_val = ret_val.next
+    return ret_val
+```
+
+Explanation
+* Initialize two pointers:
+    * slow pointer moves one step at a time.
+    * fast pointer moves two steps at a time.
+* When fast reaches the end (or None for even-length lists), slow is at the middle.
+* If the length is even, slow will end up at the second middle node (as required).
+
+# Best Solution
+```python
+def middleNode(head: ListNode) -> ListNode:
+    slow, fast = head, head
+
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+
+    return slow  # slow is now at the middle node
+```
+
+Why is this better?
+* Same logic as mine, but formatted more concisely.
+
+Complexity Analysis
+* Time Complexity: O(n)
+* Space Complexity: O(1)
